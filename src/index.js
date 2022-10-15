@@ -1,25 +1,43 @@
 import './css/styles.css';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import debounce from 'lodash.debounce';
-// const DEBOUNCE_DELAY = 300;
+import fetchCountries from './js/fetchCountries.js';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import debounce from 'lodash.debounce';
+import { searchInput, countryList, countryInfo } from './js/refs';
+import { countriesListMarkup, countryCardMarkup } from './js/markup';
 
+const DEBOUNCE_DELAY = 300;
 
-// const refs = {
-//     searchInput: document.querySelector('search-box'),
-//     countryList: document.querySelector('.country-list'),
-//     countryInfo: document.querySelector('.country-info'),
-// };
+searchInput.addEventListener('input', debounce(onInputCountry, DEBOUNCE_DELAY));
 
-// refs.searchInput.addEventListener('input',
-//     debounce(onInputCountry, DEBOUNCE_DELAY));
+// fetchCountries();
 
-const BASE_URL = 'https://restcountries.com/#api-endpoints-v3-name';
-const FITER = '?fields=name,capital,population,flags,languages';
-const resp = fetch(`${BASE_URL}${name}${FITER}`);
-resp.then(response => {
-    if (!response.ok) {
-        throw new Error()
-    }
-    console.log(response);
-    return response.json();
-});
+  
+function onInputCountry(evt) {
+    console.log(evt);
+    console.log('evt.target.value',evt.target.value);
+  resetMarkup();
+
+  const inputCountry = evt.target.value.trim();
+
+  if (inputCountry === '') return;
+  fetchCountries(inputCountry)
+    .then(renderMarkup)
+    .catch(err => Notify.failure('Oops, there is no country with that name'));
+}
+
+function resetMarkup() {
+  countryList.innerHTML = '';
+  countryInfo.innerHTML = '';
+}
+
+function renderMarkup(countryInput) {
+  const countries = countryInput.length;
+
+  if (countries > 10)
+    return Notify.info('Too many matches found. Please enter a more specific name.');
+
+  if (countries >= 2 && countries <= 10) countriesListMarkup(countryInput);
+
+  if (countries === 1) countryCardMarkup(countryInput[0]);
+}
+
