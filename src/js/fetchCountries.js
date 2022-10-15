@@ -1,3 +1,5 @@
+// функция fetchCountries(name) -- делает HTTP - запрос 
+// на ресурс name и возвращает промис с массивом стран - результатом запроса
 export default function fetchCountries(name) {
     const BASE_URL = 'https://restcountries.com/v3.1/name/';
     const FILTER = '?fields=name,capital,population,flags,languages';

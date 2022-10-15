@@ -24,7 +24,7 @@ function onInputCountry(evt) {
     .then(renderMarkup)
     .catch(err => Notify.failure('Oops, there is no country with that name'));
 }
-
+// чистимо розмітку
 function resetMarkup() {
   countryList.innerHTML = '';
   countryInfo.innerHTML = '';

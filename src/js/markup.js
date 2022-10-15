@@ -1,3 +1,5 @@
+// розмітка
+
 import { countryList, countryInfo } from './refs';
 export function countriesListMarkup(countryInput) {
   const markup = countryInput
