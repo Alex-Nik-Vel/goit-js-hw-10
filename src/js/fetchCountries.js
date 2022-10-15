@@ -6,9 +6,9 @@ export default function fetchCountries(name) {
     const resp = fetch(`${BASE_URL}${name}${FILTER}`);
     return resp.then(response => {
     if (!response.ok) {
-        throw new Error()
+        throw new Error(response.status)
     }
     console.log('response!!!', response);
     return response.json();
-})
+}).catch(err => console.log(err))
 }
