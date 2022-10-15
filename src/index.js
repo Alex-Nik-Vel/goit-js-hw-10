@@ -36,8 +36,12 @@ function renderMarkup(countryInput) {
   if (countries > 10)
     return Notify.info('Too many matches found. Please enter a more specific name.');
 
-  if (countries >= 2 && countries <= 10) countriesListMarkup(countryInput);
+    if (countries >= 2 && countries <= 10) {
+        countriesListMarkup(countryInput)
+    };
 
-  if (countries === 1) countryCardMarkup(countryInput[0]);
+    if (countries === 1) {
+        countryCardMarkup(countryInput[0])
+    };
 }
 
